@@ -21,7 +21,6 @@ class Profile extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-
                       Colors.cyan.shade100,
                       Colors.cyan.shade50,
                       Colors.white,

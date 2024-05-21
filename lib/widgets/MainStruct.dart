@@ -1,11 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:get/state_manager.dart';
+import 'package:kexie_app/routes/route.dart';
+import 'package:kexie_app/ui/class_schedule_page.dart';
+import 'package:kexie_app/ui/forumpage.dart';
 import 'package:kexie_app/ui/homepage.dart';
 import 'package:kexie_app/ui/login.dart';
 import 'package:kexie_app/ui/profilepage.dart';
+import 'package:kexie_app/widgets/ContainImageButton.dart';
 
 class MainStruct extends StatefulWidget {
   const MainStruct({super.key});
@@ -20,7 +22,7 @@ class _MainStructState extends State<MainStruct> {
   RxInt angle = 90.obs;
   RxBool floatButtonIsSelected = false.obs;
   RxDouble bottomToolbarHeight = 0.0.obs;
-  RxList<ElevatedButton> bottomBarFunctions = [ElevatedButton(onPressed: (){}, child: Text(''))].obs;
+  RxList<ContainImageButton> bottomBarFunctions = [ const ContainImageButton(background: Colors.orange, icon: Icons.event_available, label: '签到'),].obs;
 
   @override
   Widget build(BuildContext context) {
@@ -46,24 +48,28 @@ class _MainStructState extends State<MainStruct> {
               controller: _controller,
               children: const [
                 MyHomePage(),
-                Login(
-                  text: '2',
-                ),
-                Login(
-                  text: '3',
-                ),
+                ClassSchedule(),
+                Forum(),
                 Profile(),
               ],
             ),
             Positioned(
               bottom: 0,
-              child: AnimatedContainer(
-                duration: Duration(milliseconds: 300),
-                color: Colors.green,
-                height: bottomToolbarHeight.value,
-                width: MediaQuery.of(context).size.width,
-                child: Wrap(
-                  children: bottomBarFunctions,
+              child: GestureDetector(
+                onTap: (){},
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withOpacity(0.1),
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(35)),
+                    border: Border.all(width: 0.25,color: Colors.grey),
+                  ),
+                  height: bottomToolbarHeight.value,
+                  width: MediaQuery.of(context).size.width,
+                  child: Wrap(
+                    children: bottomBarFunctions,
+                  ),
                 ),
               ),
             )
@@ -88,17 +94,17 @@ class _MainStructState extends State<MainStruct> {
               bottomBarFunctions.clear();
             } else {
               angle.value += 360 * 1 + 45;
-              bottomToolbarHeight.value = MediaQuery.of(context).size.height / 6.5;
-              bottomBarFunctions.value.clear();
-              bottomBarFunctions.value.addAll([
-                ElevatedButton(onPressed: ()=>print(111), child: Text('1111111')),
-                ElevatedButton(onPressed: ()=>print(222), child: Text('莫')),
-                ElevatedButton(onPressed: ()=>print(333), child: Text('楚')),
-                ElevatedButton(onPressed: ()=>print(444), child: Text('楚')),
-                ElevatedButton(onPressed: ()=>print(555), child: Text('我')),
-                ElevatedButton(onPressed: ()=>print(666), child: Text('喜')),
-                ElevatedButton(onPressed: ()=>print(777), child: Text('欢')),
-                ElevatedButton(onPressed: ()=>print(888), child: Text('你')),
+              bottomToolbarHeight.value = MediaQuery.of(context).size.height / 3.6;
+              bottomBarFunctions.clear();
+              bottomBarFunctions.addAll([
+                ContainImageButton(background: Colors.orange, icon: Icons.event_available, label: '签到',event: () => print(123000),),
+                ContainImageButton(background: Colors.deepPurpleAccent, icon: Icons.equalizer, label: '打卡统计'),
+                ContainImageButton(background: Colors.pinkAccent, icon: Icons.add_reaction, label: '科协招新'),
+                ContainImageButton(background: Colors.blueGrey, icon: Icons.token, label: '科协黑科技'),
+                ContainImageButton(background: Colors.greenAccent, icon: Icons.web, label: '科协官网'),
+                ContainImageButton(background: Colors.yellow, icon: Icons.book, label: '图书借阅'),
+                ContainImageButton(background: Colors.blueAccent, icon: Icons.cloud_download, label: '科协网盘'),
+                ContainImageButton(background: Colors.redAccent, icon: Icons.login, label: '登录',event: () => Get.toNamed(AppRoute.loginPage),),
               ]
               );
             }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kexie_app/global/Global.dart';
-import 'package:kexie_app/ui/login.dart';
+import 'package:kexie_app/routes/route.dart';
 import 'package:kexie_app/widgets/MainStruct.dart';
 
 void main() => runApp(const MyApp());
@@ -21,9 +21,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home: const Scaffold(
         body: MainStruct(),
       ),
+      navigatorKey: AppRoute.navigatorKey,
+      getPages: AppRoute.routes,
     );
   }
 }
